@@ -4,6 +4,44 @@ CS 410 - Assignment 3: webserv.c
 
 #include <sys/socket.h>
 #include <unistd.h>
+static int const  NOTFOUND = 404;
+static int const  NOTIMPL = 501;
+
+void err_case(int code, int client){
+    char *buf = malloc(512);
+    
+    
+    //standardized messages found here https://developers.google.com/webmaster-tools/search-console-api-original/v3/errors
+    switch(code){
+        case NOTFOUND:
+            //404 case
+            //with the stupid markup stuff
+            sprintf(buf, "HTTP/**insert version** ERROR CODE 404 NOT FOUND\r\n");
+            write(client, buf, strlen(buf));
+            sprintf(buf, "<HTML><head>\n<TITLE> 404 Not Found</title></head>\r\n");
+            write(client, buf, strlen(buf));
+            sprintf(buf, "<BODY>The specified URL could not be located on our server. \r\n</BODY></HTML>\r\n");
+            write(client, buf, strlen(buf));
+            break;
+        case NOTIMPL:
+            sprintf(buf, "HTTP/**insert version** ERROR CODE 501 NOT IMPLEMENTED\r\n");
+            write(client, buf, strlen(buf));
+            sprintf(buf, "<HTML><head>\n<TITLE> 501 Not Implemented</title></head>\r\n");
+            write(client, buf, strlen(buf));
+            sprintf(buf, "<BODY>The requested operation has not been implemented. \r\n</BODY></HTML>\r\n");
+            write(client, buf, strlen(buf));
+            break;
+            
+        default:
+            sprintf(stderr, "Error finding error message lol\n");
+            break;
+    }
+    
+    close(client);
+    exit(0);
+            
+}
+    
 
 // A function to initialize a server
 int init(int type, const struct sockaddr *addr, socklen_t alen, int qlen) {

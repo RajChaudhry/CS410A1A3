@@ -31,7 +31,7 @@ void serve(int fd) {
 	set_cloexec(fd);
 	// Accept incoming requests
 	for (;;) {
-		if ((clientfd = accpet(fd, NULL, NULL)) < 0) {
+		if ((clientfd = accept(fd, NULL, NULL)) < 0) {
 			perror("shit's fukd fam");
 			exit(1);
 		}
@@ -83,7 +83,8 @@ int main(int argc, char* argv[]) {
 	if (gethostname(host, n) < 0) {
 		perror("aaaaaaaaAAAAAAA");
 	}
-	daemonize("")
+	// put command name here
+	daemonize("commandname")
 	memset(&hint, 0, sizeof(hint));
 	hint.ai_flags = AI_CANONNAME;
 	hint.ai_socktype = SOCK_STREAM;
@@ -91,8 +92,19 @@ int main(int argc, char* argv[]) {
 	hint.ai_addr = NULL;
 	hint.ai_next = NULL;
 
-	if ((err = getaddrinfo(host, )))
-	return 0;
+	// put command name here
+	if ((err = getaddrinfo(host, "commandname", &hint, &ailist)) != 0) {
+		perror("nope");
+		exit(1);
+	}
+	for (aip = ailist; aip != NULL; aip = aip->ai_next) {
+		if ((sockfd = initserver(SOCK_STREAM, aip->ai_addr,
+			aip->ai_addrlen, QLEN)) >= 0) {
+			serve(sockfd);
+			exit(0);
+		}
+	}
+	exit(1);
 }
 
 

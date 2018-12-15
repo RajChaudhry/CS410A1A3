@@ -97,6 +97,32 @@ void serve(int fd) {
 	}
 }
 
+//helpers for determining if html, gif, jpeg, cgi
+char * ftype(char *f)
+{
+	char *rest;
+	if (rest = strrchr(f, '.' )){
+		return cp++;
+	}
+	return "";
+}
+
+int isCGI(char *f){
+	return (strcmp(ftype(f), "cgi") == 0);
+}
+
+int isHTML(char *f){
+	return (strcmp(ftype(f), "html") == 0);
+}
+
+int isGIF(char *f){
+	return (strcmp(ftype(f), "gif") == 0);
+}
+
+int isJPG(char *f){
+	return ((strcmp(ftype(f), "cgi") == 0) || (strcmp(ftype(f), "jpeg") == 0));
+}
+
 int main(int argc, char* argv[]) {
 	struct addrinfo *ailist;
 	struct addrinfo *aip;
@@ -144,10 +170,6 @@ int main(int argc, char* argv[]) {
 	}
 	exit(1);
 }
-
-
-
-
 
 
 

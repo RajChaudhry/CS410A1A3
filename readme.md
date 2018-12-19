@@ -1,5 +1,6 @@
 # README
-~Written and made by Raj-Preet Chaudhry, Uthra Umashanker, and Sophia Fondell~
+
+Written and made by Raj-Preet Chaudhry, Uthra Umashanker, and Sophia Fondell
 
 ## SERVER
 webserv.c serves as our basic server, and is set up through the socket interface. Any web browser can be used as the client. Use ***BUILD COMMANDS HERE*** to make the server, and do ./buzzwire.
